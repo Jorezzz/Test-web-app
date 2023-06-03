@@ -59,5 +59,5 @@ async def task(user_id: int):
 async def create_task(user_id: int, task: str):
     cursor.execute("INSERT INTO tasks (user_id, task) VALUES (?, ?)", (user_id, task))
     con.commit()
-    return {"message": f"Task {task} created"}
+    return {"message": f"Task {task} created", "task_id": cursor.lastrowid}
 

@@ -2,6 +2,7 @@ version: '3'
 services:
   app:
     build: ./app
+    restart: always
     container_name: streamlit-app
     command: streamlit run app.py --server.port=8501 --server.address=0.0.0.0
     ports:
@@ -10,11 +11,14 @@ services:
       - api
     volumes:
       - ./app:/app
+    links:
+      - api
 
   api:
     build: ./api
+    restart: always
     container_name: python-api
-    command: uvicorn main:app --host 0.0.0.0 --port 8000
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
     ports:
       - 8000:8000
     volumes:
